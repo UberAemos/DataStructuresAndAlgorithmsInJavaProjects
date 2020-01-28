@@ -48,4 +48,8 @@ public class LinkedScoreBoard {
         board.reduceSize();
         return current;
     }
+
+    public String toString() {
+        return board.toString();
+    }
 }

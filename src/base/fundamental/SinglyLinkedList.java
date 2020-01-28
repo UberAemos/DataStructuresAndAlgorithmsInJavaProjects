@@ -36,7 +36,6 @@ public class SinglyLinkedList<E> {
     public int size() {
         return size;
     }
-
     public boolean isEmpty() {
         return size == 0;
     }
@@ -56,8 +55,8 @@ public class SinglyLinkedList<E> {
     }
 
     // update methods
-    public void reduceSize() {
-        size--;
+    public void setSize(int size) {
+        this.size = size;
     }
 
     public void addFirst(E e) {         // adds element e to the front of the list
@@ -80,6 +79,18 @@ public class SinglyLinkedList<E> {
         size--;
         if (size == 0) tail = null;     // special case as list is now empty
         return answer;
+    }
 
+    public String toString() {
+        StringBuilder builder = new StringBuilder("[");
+        if (!isEmpty()) {
+            Node<E> walk = this.head;
+            while (walk != null) {
+                builder.append(walk.getElement().toString() + ", ");
+                walk = walk.getNext();
+            }
+            builder.replace(builder.length() - 2, builder.length(), "");
+        }
+        return builder.append("]").toString();
     }
 }
