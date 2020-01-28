@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class LinkedScoreBoardTest {
     LinkedScoreBoard emptyBoard;
@@ -32,6 +33,7 @@ class LinkedScoreBoardTest {
         fullBoard.add(gameEntry5);
     }
 
+    // Add method tests
     @Test
     void whenAddElementToEmptyBoard_itIsTheFirstElement() {
         emptyBoard.add(gameEntry1);
@@ -76,7 +78,42 @@ class LinkedScoreBoardTest {
                 fullBoard.toString());
     }
 
+    // Remove method tests
     @Test
-    void remove() {
+    void whenRemoveFromEmptyList_exceptionIsThrown() {
+        assertThrows(IndexOutOfBoundsException.class, () -> emptyBoard.remove(0));
+    }
+
+    @Test
+    void whenRemoveNonExistingEntry_exceptionIsThrown() {
+        emptyBoard.add(gameEntry1);
+        assertThrows(IndexOutOfBoundsException.class, () -> emptyBoard.remove(1));
+    }
+
+    @Test
+    void whenRemoveFromSingleScoreBoard_boardIsEmpty() {
+        emptyBoard.add(gameEntry1);
+        emptyBoard.remove(0);
+        assertEquals("[]", emptyBoard.toString());
+    }
+
+    @Test
+    void whenRemoveLastFromFullScoreBoard_lastIsRemoved() {
+        fullBoard.remove(9);
+        assertEquals("[(Jim, 100), (Jim, 100), " +
+                "(Joshua, 150), (Joshua, 150), " +
+                "(John, 250), (John, 250), " +
+                "(Johanna, 300), (Johanna, 300), " +
+                "(Jane, 400)]", fullBoard.toString());
+    }
+
+    @Test
+    void whenRemoveMiddleFromFullScoreBoard_middleIsRemoved() {
+        fullBoard.remove(5);
+        assertEquals("[(Jim, 100), (Jim, 100), " +
+                "(Joshua, 150), (Joshua, 150), " +
+                "(John, 250), " +
+                "(Johanna, 300), (Johanna, 300), " +
+                "(Jane, 400), (Jane, 400)]", fullBoard.toString());
     }
 }
