@@ -7,9 +7,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-class LinkedScoreBoardTest {
-    LinkedScoreBoard emptyBoard;
-    LinkedScoreBoard fullBoard;
+class SinglyLinkedScoreBoardTest {
+    SinglyLinkedScoreBoard emptyBoard;
+    SinglyLinkedScoreBoard fullBoard;
 
     GameEntry gameEntry1 = new GameEntry("John", 250);
     GameEntry gameEntry2 = new GameEntry("Jane", 400);
@@ -19,8 +19,8 @@ class LinkedScoreBoardTest {
 
     @BeforeEach
     void init() {
-        emptyBoard = new LinkedScoreBoard();
-        fullBoard = new LinkedScoreBoard();
+        emptyBoard = new SinglyLinkedScoreBoard();
+        fullBoard = new SinglyLinkedScoreBoard();
         fullBoard.add(gameEntry1);
         fullBoard.add(gameEntry1);
         fullBoard.add(gameEntry2);

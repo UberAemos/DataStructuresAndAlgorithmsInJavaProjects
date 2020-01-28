@@ -6,7 +6,7 @@ import base.fundamental.SinglyLinkedList;
 /**
  * Maintains the top ten scores for a game application using a singly linked list.
  */
-public class LinkedScoreBoard {
+public class SinglyLinkedScoreBoard {
     final private static int capacity = 10;                                    // total capacity of this scoreboard
     private SinglyLinkedList<GameEntry> board = new SinglyLinkedList<>();      // list of game entries (names & scores)
 
