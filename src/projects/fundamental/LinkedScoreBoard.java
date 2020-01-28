@@ -18,12 +18,16 @@ public class LinkedScoreBoard {
         // is the new entry e really a high score?
         if (board.size() < capacity || newScore > board.first().getScore()) {
             // if smallest score so far add it to the head
-            if (board.first().getScore() > e.getScore() || board.isEmpty()) board.addFirst(e);
+            if (board.isEmpty() || board.first().getScore() > e.getScore()) board.addFirst(e);
                 // else insert it at the top of closest smaller element
             else {
                 SinglyLinkedList.Node<GameEntry> walk = board.getHead();
-                if (walk.getNext().getElement().getScore() > e.getScore())
-                    walk.setNext(new SinglyLinkedList.Node<>(e, walk.getNext()));
+                while (walk != null)
+                    if (walk.getNext() == null || walk.getNext().getElement().getScore() > e.getScore()) {
+                        walk.setNext(new SinglyLinkedList.Node<>(e, walk.getNext()));
+                        board.setSize(board.size() + 1);
+                        break;
+                    } else walk = walk.getNext();
             }
             // if capacity is exceeded remove the first element
             if (board.size() > capacity) board.removeFirst();
@@ -45,7 +49,7 @@ public class LinkedScoreBoard {
         }
         GameEntry current = walk.getNext().getElement();
         walk.setNext(walk.getNext().getNext());
-        board.reduceSize();
+        board.setSize(board.size() - 1);
         return current;
     }
 
