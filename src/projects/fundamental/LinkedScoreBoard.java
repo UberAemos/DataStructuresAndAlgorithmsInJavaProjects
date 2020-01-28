@@ -17,7 +17,7 @@ public class LinkedScoreBoard {
         int newScore = e.getScore();
         // is the new entry e really a high score?
         if (board.size() < capacity || newScore > board.first().getScore()) {
-            // if smallest score so far add it to the front
+            // if smallest score so far add it to the head
             if (board.first().getScore() > e.getScore() || board.isEmpty()) board.addFirst(e);
                 // else insert it at the top of closest smaller element
             else {
@@ -28,5 +28,24 @@ public class LinkedScoreBoard {
             // if capacity is exceeded remove the first element
             if (board.size() > capacity) board.removeFirst();
         }
+    }
+
+    /**
+     * Removes and return the high score at index i.
+     */
+    public GameEntry remove(int i) throws IndexOutOfBoundsException {
+        if (i < 0 || i >= board.size())
+            throw new IndexOutOfBoundsException("Invalid index: " + i);
+        if (i == 0) return board.removeFirst();
+        int currentIndex = 1;
+        SinglyLinkedList.Node<GameEntry> walk = board.getHead();
+        while (currentIndex < i) {
+            walk = walk.getNext();
+            currentIndex++;
+        }
+        GameEntry current = walk.getNext().getElement();
+        walk.setNext(walk.getNext().getNext());
+        board.reduceSize();
+        return current;
     }
 }

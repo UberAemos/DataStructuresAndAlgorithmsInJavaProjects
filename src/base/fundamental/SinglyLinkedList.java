@@ -45,10 +45,6 @@ public class SinglyLinkedList<E> {
         return head;
     }
 
-    public Node<E> getTail() {
-        return tail;
-    }
-
     public E first() {                  // returns (but does not remove) the first element
         if (isEmpty()) return null;
         return head.getElement();
@@ -60,6 +56,10 @@ public class SinglyLinkedList<E> {
     }
 
     // update methods
+    public void reduceSize() {
+        size--;
+    }
+
     public void addFirst(E e) {         // adds element e to the front of the list
         head = new Node<>(e, head);     // create and link a new node
         if (size == 0) tail = head;     // special case: new node becomes tail also
