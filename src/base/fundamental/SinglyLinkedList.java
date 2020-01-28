@@ -2,7 +2,7 @@ package base.fundamental;
 
 public class SinglyLinkedList<E> {
     // ------- nested Node class --------
-    private static class Node<E> {
+    public static class Node<E> {
         private E element;          // reference to the element stored at this node
         private Node<E> next;       // reference to the subsequent node in the list
 
@@ -39,6 +39,14 @@ public class SinglyLinkedList<E> {
 
     public boolean isEmpty() {
         return size == 0;
+    }
+
+    public Node<E> getHead() {
+        return head;
+    }
+
+    public Node<E> getTail() {
+        return tail;
     }
 
     public E first() {                  // returns (but does not remove) the first element
