@@ -40,7 +40,18 @@ public class DoublyLinkedScoreBoard {
     }
 
     public GameEntry remove(int i) throws IndexOutOfBoundsException {
-        return null;
+        if (i < 0 || i >= board.size())
+            throw new IndexOutOfBoundsException("Invalid index: " + i);
+        int currentIndex = 0;
+        DoublyLinkedList.Node<GameEntry> walk = board.getHead();
+        while (currentIndex < i) {
+            walk = walk.getNext();
+            currentIndex++;
+        }
+        GameEntry current = walk.getNext().getElement();
+        walk.setNext(walk.getNext().getNext());
+        board.setSize(board.size() - 1);
+        return current;
     }
 
     public String toString() {
