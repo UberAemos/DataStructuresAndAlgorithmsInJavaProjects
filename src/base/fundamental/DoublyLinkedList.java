@@ -5,7 +5,7 @@ package base.fundamental;
  */
 public class DoublyLinkedList<E> {
     // ------ nested Node class ------
-    private static class Node<E> {
+    public static class Node<E> {
         private E element;      // reference to the element stored at this node
         private Node<E> prev;   // reference to the previous node in the list
         private Node<E> next;   // reference to the subsequent node in the list
@@ -81,8 +81,28 @@ public class DoublyLinkedList<E> {
         return trailer.getPrev().getElement();              // last element is before trailer
     }
 
+    /**
+     * Returns (but does not remove) the first node of the list.
+     */
+    public DoublyLinkedList.Node<E> getHead() {
+        return header;
+    }
+
+    /**
+     * Returns (but does not remove) the last node of the list.
+     */
+    public DoublyLinkedList.Node<E> getTail() {
+        return trailer.getPrev();
+    }
+
     // public update methods
 
+    /**
+     * Sets the size of the list
+     */
+    public void setSize(int size) {
+        this.size = size;
+    }
     /**
      * Adds element e to the front of the list.
      */
@@ -113,8 +133,20 @@ public class DoublyLinkedList<E> {
         return remove(trailer.getPrev());                   // last element is before trailer
     }
 
-    // private update methods
+    public String toString() {
+        StringBuilder builder = new StringBuilder("[");
+        if (!isEmpty()) {
+            DoublyLinkedList.Node<E> walk = this.header.getNext();
+            while (walk.getElement() != null) {
+                builder.append(walk.getElement().toString() + ", ");
+                walk = walk.getNext();
+            }
+            builder.replace(builder.length() - 2, builder.length(), "");
+        }
+        return builder.append("]").toString();
+    }
 
+    // private update methods
     /**
      * Adds element e to the linked list in between the given nodes.
      */
