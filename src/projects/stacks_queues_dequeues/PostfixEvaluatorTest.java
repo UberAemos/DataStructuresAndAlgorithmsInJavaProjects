@@ -6,12 +6,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PostfixEvaluatorTest {
-    private final String invalidExpressionMissingParentheses = "(5 + 3";
-    private final String invalidExpressionMissingValue = "(5 + )";
+    private final String invalidExpressionMissingSign = "5 3";
+    private final String invalidExpressionMissingValue = "5 +";
 
-    private final String simpleExpression = "(5 + 3)";
+    private final String simpleExpression = "5 3 +";
 
-    private final String complexExpression = "(((5 + 3) * 12) - (6 / 2))";
+    private final String complexExpression = "5 3 + 12 * 6 2 / -";
 
     @Test
     void whenEmptyExpressionIsGiven_illegalArgumentExceptionIsThrown() {
@@ -25,9 +25,9 @@ class PostfixEvaluatorTest {
     }
 
     @Test
-    void whenInvalidExpressionWithMissingParenthesis_illegalArgumentExceptionIsThrown() {
+    void whenInvalidExpressionMissingSignIsGiven_illegalArgumentExceptionIsThrown() {
         assertThrows(IllegalArgumentException.class,
-                () -> PostfixEvaluator.evaluatePostfix(invalidExpressionMissingParentheses));
+                () -> PostfixEvaluator.evaluatePostfix(invalidExpressionMissingSign));
     }
 
     @Test
