@@ -15,18 +15,40 @@ class CapitalGainEvaluatorTest {
     private String sellTransaction1 = "sell 150 share(s) at $30 each";
     private String invalidTransaction = "feed one-fifty gazelle(s) at $30 each";
 
+    private CapitalGainEvaluator.Share exampleShare;
+    private CapitalGainEvaluator.Share largeSellShare;
+    private CapitalGainEvaluator.Share lessSellShare;
+
     private CapitalGainEvaluator emptyGainEvaluator;
 
     @BeforeEach
     void init() {
         emptyGainEvaluator = new CapitalGainEvaluator();
+        exampleShare = new CapitalGainEvaluator.Share(100, 20);
+        lessSellShare = new CapitalGainEvaluator.Share(80, 30);
+        largeSellShare = new CapitalGainEvaluator.Share(150, 10);
     }
 
+    // ------ Share Tests ------
     @Test
     void whenValidBuyTransactionIsGivenToShareFactory_shareIsCreated() {
         assertEquals("Share{count=100, value=20}", CapitalGainEvaluator.Share.fromTransaction(buyTransaction1).toString());
         assertEquals("Share{count=20, value=24}", CapitalGainEvaluator.Share.fromTransaction(buyTransaction2).toString());
         assertEquals("Share{count=200, value=36}", CapitalGainEvaluator.Share.fromTransaction(buyTransaction3).toString());
+    }
+
+    @Test
+    void whenSellAmountIsLargerThanShareAmount_subtractsSellShareAmount_currentShareAmountIsZero_returnsCapitalGain() {
+        assertEquals(-1000, exampleShare.sellShare(largeSellShare));
+        assertEquals(0, exampleShare.getAmount());
+        assertEquals(50, largeSellShare.getAmount());
+    }
+
+    @Test
+    void whenSellAmountIsLesserThanShareAmount_subtractsSellShareAmount_currentShareAmountIsZero_returnsCapitalGain() {
+        assertEquals(800, exampleShare.sellShare(lessSellShare));
+        assertEquals(20, exampleShare.getAmount());
+        assertEquals(0, lessSellShare.getAmount());
     }
 
     @Test
