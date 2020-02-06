@@ -77,28 +77,47 @@ public class CapitalGainEvaluator {
 
     final private static String buyTransactionFormat = "buy \\d+ share\\(s\\) at \\$\\d+ each";
     final private static String sellTransactionFormat = "sell \\d+ share\\(s\\) at \\$\\d+ each";
+    final private static String transactionFormat = "(buy|sell) \\d+ share\\(s\\) at \\$\\d+ each";
 
+    /**
+     * Attempts to make a buy / sell transaction from the given transaction text
+     *
+     * @param transaction transaction text that includes transaction type, share amount and value.
+     * @return current capital gain / loss from the sequence of transactions.
+     */
     public int transact(String transaction) {
-        if (isBuyTransaction(transaction)) return buy(transaction);
-        else if (isSellTransaction(transaction)) return sell(transaction);
-        else throw new IllegalArgumentException("Illegal transaction format.");
+        if (isTransaction(transaction)) {
+            Share share = Share.fromTransaction(transaction);
+            if (transaction.contains("buy")) return buy(share);
+            else return sell(share);
+        } else throw new IllegalArgumentException("Illegal transaction format.");
     }
 
-    private int sell(String transaction) {
-        Share sellShare = Share.fromTransaction(transaction);
-        if (sellShare.getAmount() > totalShareAmount)
-            throw new InssufficientShareException(totalShareAmount, sellShare.amount);
-        totalShareAmount -= sellShare.amount;
-        while (sellShare.amount > 0) {
+    /**
+     * Sells given amount of shares at the given value
+     *
+     * @param share Defines the sell amount and value of the shares
+     * @return Current capital gain / loss after the transaction
+     */
+    private int sell(Share share) {
+        if (share.getAmount() > totalShareAmount)
+            throw new InssufficientShareException(totalShareAmount, share.amount);
+        totalShareAmount -= share.amount;
+        while (share.amount > 0) {
             Share currentShare = shareQueue.first();
-            capitalGain += currentShare.sellShare(sellShare);
+            capitalGain += currentShare.sellShare(share);
             if (currentShare.amount == 0) shareQueue.dequeue();
         }
         return capitalGain;
     }
 
-    private int buy(String transaction) {
-        Share share = Share.fromTransaction(transaction);
+    /**
+     * Buys given amount of shares at the given value
+     *
+     * @param share Defines the amount and value of shares to be bought
+     * @return Current capital gain / loss after the transaction
+     */
+    private int buy(Share share) {
         shareQueue.enqueue(share);
         totalShareAmount += share.amount;
         return capitalGain;
@@ -112,11 +131,13 @@ public class CapitalGainEvaluator {
                 '}';
     }
 
-    private static boolean isBuyTransaction(String transaction) {
-        return Pattern.matches(buyTransactionFormat, transaction);
-    }
-
-    private static boolean isSellTransaction(String transaction) {
-        return Pattern.matches(sellTransactionFormat, transaction);
+    /**
+     * Checks the given transaction text against the defined transaction format
+     *
+     * @param transaction The transaction text to be checked.
+     * @return true if the transaction matches the format
+     */
+    private static boolean isTransaction(String transaction) {
+        return Pattern.matches(transactionFormat, transaction);
     }
 }
