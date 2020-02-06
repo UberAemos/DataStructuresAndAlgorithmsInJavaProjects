@@ -69,6 +69,7 @@ public class SinglyLinkedList<E> {
         Node<E> newest = new Node<>(e, null);   // node will eventually be tail
         if (isEmpty()) head = newest;              // special case: previously empty list
         else tail.setNext(newest);                 // new node becomes the tail
+        tail = newest;
         size++;
     }
 

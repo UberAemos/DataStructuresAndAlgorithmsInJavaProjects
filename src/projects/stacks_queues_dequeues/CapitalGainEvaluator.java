@@ -1,5 +1,8 @@
 package projects.stacks_queues_dequeues;
 
+import base.stacks_queues_dequeues.LinkedQueue;
+import projects.stacks_queues_dequeues.exception.InssufficientShareException;
+
 import java.util.regex.Pattern;
 
 public class CapitalGainEvaluator {
@@ -65,5 +68,55 @@ public class CapitalGainEvaluator {
                     ", value=" + value +
                     '}';
         }
+    }
+    // ------ Share implementation end-------
+
+    private LinkedQueue<Share> shareQueue = new LinkedQueue<>();
+    private int capitalGain = 0;
+    private int totalShareAmount = 0;
+
+    final private static String buyTransactionFormat = "buy \\d+ share\\(s\\) at \\$\\d+ each";
+    final private static String sellTransactionFormat = "sell \\d+ share\\(s\\) at \\$\\d+ each";
+
+    public int transact(String transaction) {
+        if (isBuyTransaction(transaction)) return buy(transaction);
+        else if (isSellTransaction(transaction)) return sell(transaction);
+        else throw new IllegalArgumentException("Illegal transaction format.");
+    }
+
+    private int sell(String transaction) {
+        Share sellShare = Share.fromTransaction(transaction);
+        if (sellShare.getAmount() > totalShareAmount)
+            throw new InssufficientShareException(totalShareAmount, sellShare.amount);
+        totalShareAmount -= sellShare.amount;
+        while (sellShare.amount > 0) {
+            Share currentShare = shareQueue.first();
+            capitalGain += currentShare.sellShare(sellShare);
+            if (currentShare.amount == 0) shareQueue.dequeue();
+        }
+        return capitalGain;
+    }
+
+    private int buy(String transaction) {
+        Share share = Share.fromTransaction(transaction);
+        shareQueue.enqueue(share);
+        totalShareAmount += share.amount;
+        return capitalGain;
+    }
+
+    public String toString() {
+        return "CapitalGainEvaluator{" +
+                "shareQueue=" + shareQueue +
+                ", capitalGain=" + capitalGain +
+                ", totalShareAmount=" + totalShareAmount +
+                '}';
+    }
+
+    private static boolean isBuyTransaction(String transaction) {
+        return Pattern.matches(buyTransactionFormat, transaction);
+    }
+
+    private static boolean isSellTransaction(String transaction) {
+        return Pattern.matches(sellTransactionFormat, transaction);
     }
 }

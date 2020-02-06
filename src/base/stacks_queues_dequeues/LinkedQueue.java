@@ -27,4 +27,9 @@ public class LinkedQueue<E> implements Queue<E> {
     public E dequeue() {
         return list.removeFirst();
     }
+
+    @Override
+    public String toString() {
+        return list.toString();
+    }
 }
