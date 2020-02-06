@@ -3,13 +3,14 @@ package projects.stacks_queues_dequeues;
 import java.util.regex.Pattern;
 
 public class CapitalGainEvaluator {
+    // ------ Share implementation -------
+
     /**
      * Describes the share stock of a company
      */
     public static class Share {
         private int amount;  // The stock amount
         private int value;  // Buy value of the stock
-        final private static String transactionFormat = "buy \\d+ share\\(s\\) at \\$\\d+ each";
 
         public Share(int amount, int value) {
             this.amount = amount;
@@ -24,18 +25,28 @@ public class CapitalGainEvaluator {
          * @return Stock Share object in the amount and value of the transaction.
          */
         public static Share fromTransaction(String transaction) {
-            if (isTransaction(transaction))
-                throw new IllegalArgumentException(
-                        "Illegal transaction format. " +
-                                "Give a buy transaction in 'buy (amount) share(s) at $(value) each' format");
             String[] fragments = transaction.split(" ");
             int amount = Integer.parseInt(fragments[1]);
             int value = Integer.parseInt(fragments[4].substring(1));
             return new Share(amount, value);
         }
 
-        private static boolean isTransaction(String transaction) {
-            return !Pattern.matches(transactionFormat, transaction);
+        /**
+         * Sells given amount of shares from the current share if current share has the required amount, else sells all
+         * available amount within the current share
+         *
+         * @param share Sell amount and value for the current share
+         * @return Capital gain from the sell transaction.
+         */
+        public int sellShare(Share share) {
+            int sellAmount = Math.min(share.getAmount(), this.getAmount());
+            this.subtract(sellAmount);
+            share.subtract(sellAmount);
+            return sellAmount * (share.getValue() - this.getValue());
+        }
+
+        private void subtract(int sellAmount) {
+            this.amount = this.amount - sellAmount;
         }
 
         // Access Methods
