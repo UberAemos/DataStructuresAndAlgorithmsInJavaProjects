@@ -72,7 +72,7 @@ class CapitalGainEvaluatorTest {
         emptyGainEvaluator.transact(buyTransaction1);
         assertEquals(0, emptyGainEvaluator.transact(buyTransaction2));
         assertEquals("CapitalGainEvaluator{" +
-                        "shareQueue=[Share{count=20, value=24}, Share{count=100, value=20}]" +
+                        "shareQueue=[Share{count=100, value=20}, Share{count=20, value=24}]" +
                         ", capitalGain=0" +
                         ", totalShareAmount=120" +
                         '}',
@@ -88,7 +88,7 @@ class CapitalGainEvaluatorTest {
     @Test
     void whenSellTransaction1IsGivenAfterBuyTransaction3_returnsCapitalLoss() {
         emptyGainEvaluator.transact(buyTransaction3);
-        assertEquals(-900, emptyGainEvaluator.transact(buyTransaction1));
+        assertEquals(-900, emptyGainEvaluator.transact(sellTransaction1));
         assertEquals("CapitalGainEvaluator{" +
                         "shareQueue=[Share{count=50, value=36}]" +
                         ", capitalGain=-900" +
@@ -99,8 +99,10 @@ class CapitalGainEvaluatorTest {
 
     @Test
     void whenSellTransaction1IsGivenAfterBuyTransaction123_returnsCapitalGain() {
+        emptyGainEvaluator.transact(buyTransaction1);
+        emptyGainEvaluator.transact(buyTransaction2);
         emptyGainEvaluator.transact(buyTransaction3);
-        assertEquals(940, emptyGainEvaluator.transact(buyTransaction1));
+        assertEquals(940, emptyGainEvaluator.transact(sellTransaction1));
         assertEquals("CapitalGainEvaluator{" +
                         "shareQueue=[Share{count=170, value=36}]" +
                         ", capitalGain=940" +
