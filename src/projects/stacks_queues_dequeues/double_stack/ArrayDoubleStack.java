@@ -42,12 +42,12 @@ public class ArrayDoubleStack<E> implements DoubleStack<E> {
 
     @Override
     public int redSize() {
-        return tRed + 2;
+        return (tRed - CAPACITY / 2) + 1;
     }
 
     @Override
     public int blueSize() {
-        return tBlue + 2;
+        return tBlue + 1;
     }
 
     @Override
@@ -77,7 +77,6 @@ public class ArrayDoubleStack<E> implements DoubleStack<E> {
 
     /**
      * Returns but does not remove the top element in the blue stack
-     *
      * @return Top element in the blue stack
      */
     public E blueTop() {
@@ -85,14 +84,20 @@ public class ArrayDoubleStack<E> implements DoubleStack<E> {
         return data[tBlue];
     }
 
-    @Override
+    /**
+     * Returns and removes the top element in the blue stack
+     *
+     * @return Top element in blue stack
+     */
     public E bluePop() {
-        return null;
+        if (isBlueEmpty()) return null;
+        E current = data[tBlue];
+        data[tBlue--] = null;
+        return current;
     }
 
     /**
      * Adds element e to the red stack
-     *
      * @param e the element to be inserted
      */
     public void redPush(E e) {
@@ -109,8 +114,14 @@ public class ArrayDoubleStack<E> implements DoubleStack<E> {
         return data[tRed];
     }
 
-    @Override
+    /**
+     * Returns and removes the top element in the red stack
+     * @return Top element in red stack
+     */
     public E redPop() {
-        return null;
+        if (isRedEmpty()) return null;
+        E current = data[tRed];
+        data[tRed--] = null;
+        return current;
     }
 }

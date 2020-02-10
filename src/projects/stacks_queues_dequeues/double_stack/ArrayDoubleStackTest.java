@@ -92,19 +92,26 @@ class ArrayDoubleStackTest {
     }
 
     @Test
-    void bluePop() {
+    void whenPopInEmptyBlueStack_thenReturnsNull() {
+        assertNull(emptyDoubleStack.bluePop());
     }
 
     @Test
-    void redPush() {
-
+    void whenPopInEmptyRedStack_thenReturnsNull() {
+        assertNull(emptyDoubleStack.redPop());
     }
 
     @Test
-    void redTop() {
+    void whenPopBlueInExampleStack_thenReturnsThree_sizeEqualsTwo_topElementIsTwo() {
+        assertEquals(3, exampleDoubleStack.bluePop());
+        assertEquals(2, exampleDoubleStack.blueSize());
+        assertEquals(2, exampleDoubleStack.blueTop());
     }
 
     @Test
-    void redPop() {
+    void whenPopRedInExampleStack_thenReturnsFiveHundredAndOne_sizeEqualsOne_topElementIsFiveHundred() {
+        assertEquals(501, exampleDoubleStack.redPop());
+        assertEquals(1, exampleDoubleStack.redSize());
+        assertEquals(500, exampleDoubleStack.redTop());
     }
 }
