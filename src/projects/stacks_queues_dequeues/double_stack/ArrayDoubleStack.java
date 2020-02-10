@@ -75,9 +75,14 @@ public class ArrayDoubleStack<E> implements DoubleStack<E> {
         data[++tBlue] = e;
     }
 
-    @Override
+    /**
+     * Returns but does not remove the top element in the blue stack
+     *
+     * @return Top element in the blue stack
+     */
     public E blueTop() {
-        return null;
+        if (isBlueEmpty()) return null;
+        return data[tBlue];
     }
 
     @Override
@@ -95,9 +100,13 @@ public class ArrayDoubleStack<E> implements DoubleStack<E> {
         data[++tRed] = e;
     }
 
-    @Override
+    /**
+     * Returns but does not remove the top element in the red stack
+     * @return Top element in the red stack
+     */
     public E redTop() {
-        return null;
+        if (isRedEmpty()) return null;
+        return data[tRed];
     }
 
     @Override

@@ -3,8 +3,7 @@ package projects.stacks_queues_dequeues.double_stack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class ArrayDoubleStackTest {
 
@@ -73,7 +72,23 @@ class ArrayDoubleStackTest {
     }
 
     @Test
-    void blueTop() {
+    void whenTopInEmptyBlueStack_thenReturnsNull() {
+        assertNull(emptyDoubleStack.blueTop());
+    }
+
+    @Test
+    void whenTopInEmptyRedStack_thenReturnsNull() {
+        assertNull(emptyDoubleStack.redTop());
+    }
+
+    @Test
+    void whenTopBlueInExampleStack_thenReturnsThree() {
+        assertEquals(3, exampleDoubleStack.blueTop());
+    }
+
+    @Test
+    void whenTopRedInExampleStack_thenReturnsFiveHundredAndOne() {
+        assertEquals(501, exampleDoubleStack.redTop());
     }
 
     @Test
