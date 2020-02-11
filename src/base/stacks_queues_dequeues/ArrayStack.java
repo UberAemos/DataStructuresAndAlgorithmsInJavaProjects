@@ -2,8 +2,8 @@ package base.stacks_queues_dequeues;
 
 public class ArrayStack<E> implements Stack<E> {
     public static final int CAPACITY = 1000;    // default array capacity
-    private E[] data;                           // generic array used for storage
-    private int t = -1;                         // index of top element in stack
+    protected E[] data;                           // generic array used for storage
+    protected int t = -1;                         // index of top element in stack
 
     public ArrayStack() {
         this(CAPACITY);

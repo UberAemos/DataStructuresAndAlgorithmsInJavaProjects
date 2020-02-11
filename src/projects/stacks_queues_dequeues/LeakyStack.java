@@ -1,62 +1,46 @@
 package projects.stacks_queues_dequeues;
 
-import base.stacks_queues_dequeues.Stack;
-
-import static base.stacks_queues_dequeues.ArrayStack.CAPACITY;
+import base.stacks_queues_dequeues.ArrayStack;
 
 /**
  * Array based stack implementation that replaces the last element when the capacity is full
  */
-public class LeakyStack<E> implements Stack<E> {
-    //instance variable
-    private E[] data;       // generic array used for storage
-    private int f = 0;      // index of the front element
-    private int sz = 0;     // current number of elements
+public class LeakyStack<E> extends ArrayStack<E> {
+    private int size = 0;
 
-    // constructors
     public LeakyStack() {
-        this(CAPACITY);
-    }       // constructs queue with default capacity
+        super();
+    }
 
-    /**
-     * Construct queue with given capacity
-     *
-     * @param capacity
-     */
     public LeakyStack(int capacity) {
-        data = (E[]) new Object[capacity];
+        super(capacity);
     }
 
     /**
-     * Returns the number of elements in the stack.
-     */
-    public int size() {
-        return sz;
-    }
-
-    /**
-     * Tests whether the stack is empty.
-     */
-    public boolean isEmpty() {
-        return sz == 0;
-    }
-
-    /**
-     * Pushes e to the top of the list, if the stack is full then removes the bottom element
-     *
+     * Inserts e to the stack, if the stack capacity is full removes the oldest element from the stack
      * @param e the element to be inserted
      */
     public void push(E e) {
-        data[f++] = e;
+        t = (t + 1) % data.length;
+        data[t] = e;
+        if (size < data.length) size++;
     }
 
     @Override
-    public E top() {
-        return null;
+    public int size() {
+        return size;
     }
 
     @Override
-    public E pop() {
-        return null;
+    public String toString() {
+        StringBuilder stack = new StringBuilder("[");
+        for (int i = 0; i < size; i++) {
+            int currentIndex = t - i;
+            currentIndex = (currentIndex < 0) ? currentIndex + size : currentIndex;
+            stack.append(data[currentIndex]).append(", ");
+        }
+        stack.delete(stack.length() - 2, stack.length());
+        stack.append("]");
+        return stack.toString();
     }
 }
