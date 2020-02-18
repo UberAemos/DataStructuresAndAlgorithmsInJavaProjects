@@ -37,7 +37,7 @@ public class LinkedTree<E> extends AbstractTree<E> {
         }
     }
 
-    // LinkedAbstractTree instance variables
+    // LinkedTree instance variables
     protected Node<E> root = null;
     protected int size = 0;
 
