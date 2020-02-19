@@ -2,11 +2,15 @@ package projects.trees;
 
 import base.trees.BinaryTree;
 
+import java.util.regex.Pattern;
+
 /**
  * A program that converts an arithmetic expression to a binary expression tree, anc make related arithmetic operations
  * related to the tree
  */
 public class ExpressionTree {
+
+    final private static String expressionFormat = "(((\\(.+\\))|\\d+)\\s[+*\\-/]\\s((\\(.+\\))|\\d+))";
 
     /**
      * Converts the given expression to a Binary Expression Tree
@@ -21,6 +25,6 @@ public class ExpressionTree {
     }
 
     private static boolean isExpression(String expression) {
-        return false;
+        return Pattern.matches(expressionFormat, expression);
     }
 }
