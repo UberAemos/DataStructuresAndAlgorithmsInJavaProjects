@@ -27,6 +27,6 @@ public abstract class AbstractTree<E> implements Tree<E> {
             }
             return builder.append(")").toString();
         }
-        return "";
+        return builder.toString();
     }
 }
