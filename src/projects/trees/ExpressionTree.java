@@ -3,6 +3,8 @@ package projects.trees;
 import base.trees.LinkedBinaryTree;
 import base.trees.Position;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +16,7 @@ public class ExpressionTree {
 
     final private static String expressionFormat = "(((\\(.+\\))|\\d+)\\s[+*\\-/]\\s((\\(.+\\))|\\d+))";
     final private static String arithmeticOperationFormat = "((?<=\\).)|(?<!\\(.))[+*\\-/]((?=.+\\()|(?!.+\\)))";
+    final private static List<String> arithmeticExpressionSign = Arrays.asList("+", "-", "*", "/");
 
     /**
      * Converts the given expression to a Binary Expression Tree
@@ -30,14 +33,47 @@ public class ExpressionTree {
     /**
      * Evaluates the expressionTree starting from the given position
      *
-     * @param position       Position to start the evaluation, position should be an arithmetic sign
+     * @param position Position to start the evaluation, position should be an arithmetic sign
      * @param expressionTree Arithmetic expression tree to evaluate
      * @return The numeric result of the arithmetic operation
      * @throws IllegalArgumentException If the given position is not an arithmetic operation sign
      */
     public static int evaluateExpressionTree(Position<String> position, LinkedBinaryTree<String> expressionTree)
             throws IllegalArgumentException {
-        return 0;
+        if (!isSign(position.getElement())) throw new IllegalArgumentException(position.getElement() +
+                " is not a valid arithmetic operation sign.");
+        return evaluateExpressionNode(position, expressionTree);
+    }
+
+    /**
+     * Evaluates the arithmetic expression with arguments as left and right child if the given position is a sign, else
+     * returns the numeric expression
+     *
+     * @param position       Current position to evaluate
+     * @param expressionTree Arithmetic expression tree
+     * @return A new arithmetic expression if the current position is a sign else returns the numeric value
+     */
+    private static int evaluateExpressionNode(Position<String> position, LinkedBinaryTree<String> expressionTree) {
+        String element = position.getElement();
+        if (isNumeric(element)) return Integer.parseInt(element);
+        else if (isSign(element)) {
+            Position<String> left = expressionTree.left(position);
+            Position<String> right = expressionTree.right(position);
+            switch (element) {
+                case "+":
+                    return evaluateExpressionNode(left, expressionTree) + evaluateExpressionNode(right, expressionTree);
+                case "-":
+                    return evaluateExpressionNode(left, expressionTree) - evaluateExpressionNode(right, expressionTree);
+                case "*":
+                    return evaluateExpressionNode(left, expressionTree) * evaluateExpressionNode(right, expressionTree);
+                default:
+                    return evaluateExpressionNode(left, expressionTree) / evaluateExpressionNode(right, expressionTree);
+            }
+        } else throw new IllegalArgumentException(element + " is not a valid arithmetic expression sign.");
+    }
+
+    private static boolean isSign(String element) {
+        return arithmeticExpressionSign.contains(element);
     }
 
     /**
