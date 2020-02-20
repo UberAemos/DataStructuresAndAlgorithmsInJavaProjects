@@ -5,7 +5,6 @@ import base.trees.Position;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -15,7 +14,6 @@ import java.util.regex.Pattern;
 public class ExpressionTree {
 
     final private static String expressionFormat = "(((\\(.+\\))|\\d+)\\s[+*\\-/]\\s((\\(.+\\))|\\d+))";
-    final private static String arithmeticOperationFormat = "((?<=\\).)|(?<!\\(.))[+*\\-/]((?=.+\\()|(?!.+\\)))";
     final private static List<String> arithmeticExpressionSign = Arrays.asList("+", "-", "*", "/");
 
     /**
@@ -106,11 +104,13 @@ public class ExpressionTree {
      * @return Operation sign index of the outermost expression
      */
     private static int findCurrentArithmeticOperationIndex(String expression) {
-        int start = 0;
-        Pattern pattern = Pattern.compile(arithmeticOperationFormat);
-        Matcher matcher = pattern.matcher(expression);
-        while (matcher.find()) start = matcher.start();
-        return start;
+        int parenthesisStack = 0;
+        for (int i = 0; i < expression.length(); i++) {
+            if (expression.charAt(i) == '(') parenthesisStack++;
+            else if (expression.charAt(i) == ')') parenthesisStack--;
+            else if (isSign(Character.toString(expression.charAt(i))) && parenthesisStack == 0) return i;
+        }
+        return 0;
     }
 
     /**
