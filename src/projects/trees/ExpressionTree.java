@@ -28,6 +28,19 @@ public class ExpressionTree {
     }
 
     /**
+     * Evaluates the expressionTree starting from the given position
+     *
+     * @param position       Position to start the evaluation, position should be an arithmetic sign
+     * @param expressionTree Arithmetic expression tree to evaluate
+     * @return The numeric result of the arithmetic operation
+     * @throws IllegalArgumentException If the given position is not an arithmetic operation sign
+     */
+    public static int evaluateExpressionTree(Position<String> position, LinkedBinaryTree<String> expressionTree)
+            throws IllegalArgumentException {
+        return 0;
+    }
+
+    /**
      * Checks the given expression, assigns the current arithmetic operator to the current position and adds left and right
      * arguments to the corresponding children node, until a number remains
      *
