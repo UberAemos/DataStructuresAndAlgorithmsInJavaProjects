@@ -14,11 +14,11 @@ class ExpressionTreeTest {
 
     String validExpression1 = "(3 + 5)";
     String validExpression2 = "(3 + (5 * 6))";
-    String validExpression3 = "((3 / 4) + (5 * 6))";
+    String validExpression3 = "((4 / 2) + (5 * 6))";
 
     String validTree1 = "+ (3, 5)";
     String validTree2 = "+ (3, * (5, 6))";
-    String validTree3 = "+ (/ (3, 4), * (5, 6))";
+    String validTree3 = "+ (/ (4, 2), * (5, 6))";
 
     @Test
     void whenInvalidArithmeticExpressionGivenToConvert_thenThrowsIllegalArgumentException() {
@@ -43,5 +43,23 @@ class ExpressionTreeTest {
     void whenValidExpression3IsGivenToConvert_thenReturnsValidTree3() {
         LinkedBinaryTree<String> tree = ExpressionTree.convertToExpressionTree(validExpression3);
         assertEquals(validTree3, AbstractBinaryTree.parenthesize(tree, tree.root()));
+    }
+
+    @Test
+    void whenValidExpression1IsEvaluated_thenReturnsEight() {
+        LinkedBinaryTree<String> strings = ExpressionTree.convertToExpressionTree(validExpression1);
+        assertEquals(8, ExpressionTree.evaluateExpressionTree(strings.root(), strings));
+    }
+
+    @Test
+    void whenValidExpression2IsEvaluated_thenReturns33() {
+        LinkedBinaryTree<String> strings = ExpressionTree.convertToExpressionTree(validExpression2);
+        assertEquals(33, ExpressionTree.evaluateExpressionTree(strings.root(), strings));
+    }
+
+    @Test
+    void whenValidExpression3IsEvaluated_thenReturns32() {
+        LinkedBinaryTree<String> strings = ExpressionTree.convertToExpressionTree(validExpression3);
+        assertEquals(32, ExpressionTree.evaluateExpressionTree(strings.root(), strings));
     }
 }
