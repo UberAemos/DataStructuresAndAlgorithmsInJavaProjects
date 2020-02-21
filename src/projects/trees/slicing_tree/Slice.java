@@ -10,6 +10,10 @@ abstract class Slice {
         this.element = element;
     }
 
+    public abstract int width();
+
+    public abstract int height();
+
     public String getElement() {
         return element;
     }
