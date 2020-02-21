@@ -5,8 +5,8 @@ package projects.trees.slicing_tree;
  */
 public class RectangleSlice extends Slice {
 
-    private int width;
-    private int height;
+    protected int width;
+    protected int height;
 
     public RectangleSlice(String element, int width, int height) {
         super(element);
@@ -14,11 +14,11 @@ public class RectangleSlice extends Slice {
         this.height = height;
     }
 
-    public int width() {
+    public int getWidth() {
         return width;
     }
 
-    public int height() {
+    public int getHeight() {
         return height;
     }
 }
