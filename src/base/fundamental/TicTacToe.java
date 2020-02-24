@@ -84,4 +84,8 @@ public class TicTacToe {
         }
         return sb.toString();
     }
+
+    public int getPlayer() {
+        return player;
+    }
 }
