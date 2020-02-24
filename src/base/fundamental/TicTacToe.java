@@ -62,6 +62,10 @@ public class TicTacToe {
         else return 0;
     }
 
+    public int getPosition(int i, int j) {
+        return board[i][j];
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
