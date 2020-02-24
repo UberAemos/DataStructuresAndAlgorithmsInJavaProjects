@@ -16,6 +16,15 @@ public class TicTacToe {
         clearBoard();
     }
 
+    private TicTacToe(int board[][], int player) {
+        this.board = board;
+        this.player = player;
+    }
+
+    public TicTacToe copy() {
+        return new TicTacToe(this.board, this.player);
+    }
+
     /**
      * Clears the board
      */
