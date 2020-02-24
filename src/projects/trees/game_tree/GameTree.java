@@ -15,7 +15,7 @@ public class GameTree {
      * @return TicTacToe game state with the optimal move
      * @throws IllegalArgumentException If the given game state is not a valid TicTacToe game
      */
-    public static Position<TicTacToe> pickMove(Position<TicTacToe> gameState) throws IllegalArgumentException {
+    public static Position<TicTacToe> pickMove(TicTacToe gameState) throws IllegalArgumentException {
         return null;
     }
 }
