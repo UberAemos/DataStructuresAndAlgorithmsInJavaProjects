@@ -72,7 +72,7 @@ public class TicTacToe {
                         sb.append("X");
                         break;
                     case O:
-                        sb.append("0");
+                        sb.append("O");
                         break;
                     case EMPTY:
                         sb.append(" ");
