@@ -9,7 +9,7 @@ class SlicingTreeTest {
 
     SlicingTree slicingTree;
 
-    String singleBasicRectangle = "1";
+    String singleBasicRectangle = "0";
     String treeWithHorizontalCut = "- (1, 2)";
     String treeWithVerticalCut = "| (1, 2)";
     String treeFloorPlan = "- (| (1, - (2, | (3, 4))), | (5, 6))";

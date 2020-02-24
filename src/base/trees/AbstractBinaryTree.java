@@ -38,4 +38,21 @@ public abstract class AbstractBinaryTree<E> extends AbstractTree<E> implements B
         if (right(p) != null) snapshot.add(right(p));
         return snapshot;
     }
+
+    /**
+     * Prints parenthesized representation of subtree of T rooted at p.
+     */
+    public static <E> String parenthesize(BinaryTree<E> T, Position<E> p) {
+        StringBuilder builder = new StringBuilder(p.getElement().toString());
+        if (T.isInternal(p)) {
+            boolean firstTime = true;
+            for (Position<E> c : T.children(p)) {
+                builder.append(firstTime ? " (" : ", ");        // determine proper punctuation
+                firstTime = false;
+                builder.append(parenthesize(T, c));
+            }
+            return builder.append(")").toString();
+        }
+        return builder.toString();
+    }
 }

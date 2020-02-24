@@ -17,4 +17,9 @@ abstract class Slice {
     public void setElement(String element) {
         this.element = element;
     }
+
+    @Override
+    public String toString() {
+        return element;
+    }
 }
