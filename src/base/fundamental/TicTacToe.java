@@ -61,4 +61,27 @@ public class TicTacToe {
         else if (isWin(O)) return (O);
         else return 0;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                switch (board[i][j]) {
+                    case X:
+                        sb.append("X");
+                        break;
+                    case O:
+                        sb.append("0");
+                        break;
+                    case EMPTY:
+                        sb.append(" ");
+                        break;
+                }
+                if (j < 2) sb.append("|");              // column boundary
+            }
+            if (i < 2) sb.append("\n------\n");     // row boundary
+        }
+        return sb.toString();
+    }
 }
