@@ -125,6 +125,16 @@ public class LinkedTree<E> extends AbstractTree<E> {
         return root;
     }
 
+    /**
+     * Makes the given tree position current tree root
+     *
+     * @param p Tree position to be the future root
+     * @throws IllegalArgumentException If the given position is not a tree node
+     */
+    public void makePositionRoot(Position<E> p) throws IllegalArgumentException {
+
+    }
+
     @Override
     public Iterator<E> iterator() {
         return null;
