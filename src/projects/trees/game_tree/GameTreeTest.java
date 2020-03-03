@@ -12,9 +12,9 @@ class GameTreeTest {
     TicTacToe easyGameForO;
 
     String easyGameForXAnswer =
-            "X|X|X" + "\n-----\n" + "O| | " + "\n-----\n" + "O| | ";
+            "X|X|X" + "\n------\n" + "O| | " + "\n------\n" + "O| | ";
     String easyGameForOAnswer =
-            "X|O|X" + "\n-----\n" + "X|O| " + "\n-----\n" + " |O| ";
+            "X|O|X" + "\n------\n" + "X|O| " + "\n------\n" + " |O| ";
 
 
     @BeforeEach
@@ -31,20 +31,19 @@ class GameTreeTest {
         easyGameForO.putMark(0, 2);
         easyGameForO.putMark(1, 1);
         easyGameForO.putMark(1, 0);
-        easyGameForO.putMark(2, 1);
     }
 
     @Test
     void whenEasyGameForXIsGiven_returnEasyGameForXAnswer() {
         assertEquals(
                 easyGameForXAnswer,
-                GameTree.pickMove(easyGameForX).toString());
+                GameTree.findBestMove(easyGameForX).toString());
     }
 
     @Test
     void whenEasyGameForOIsGiven_returnEasyGameForOAnswer() {
         assertEquals(
                 easyGameForOAnswer,
-                GameTree.pickMove(easyGameForO).toString());
+                GameTree.findBestMove(easyGameForO).toString());
     }
 }
