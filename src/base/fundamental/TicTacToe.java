@@ -22,7 +22,11 @@ public class TicTacToe {
     }
 
     public TicTacToe copy() {
-        return new TicTacToe(this.board, this.player);
+        int[][] copyArray = new int[3][3];
+        for (int i = 0; i < 3; i++)
+            for (int j = 0; j < 3; j++)
+                copyArray[i][j] = board[i][j];
+        return new TicTacToe(copyArray, this.player);
     }
 
     /**
@@ -50,7 +54,7 @@ public class TicTacToe {
     /**
      * Checks whether the board configuration is a win for the given player.
      */
-    public boolean isWin(int mark) {
+    private boolean isWin(int mark) {
         return ((board[0][0] + board[0][1] + board[0][2] == mark * 3)     // row 0
                 || (board[1][0] + board[1][1] + board[1][2] == mark * 3)  // row 1
                 || (board[2][0] + board[2][1] + board[2][2] == mark * 3)  // row 2
