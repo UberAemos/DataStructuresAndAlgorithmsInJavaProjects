@@ -32,8 +32,12 @@ public class LinkedTree<E> extends AbstractTree<E> {
             return children;
         }
 
-        public void addChild(Position<E> child) {
+        public void addChild(Node<E> child) {
             this.children.add(child);
+        }
+
+        public void setParent(Node<E> parent) {
+            this.parent = parent;
         }
     }
 
@@ -120,10 +124,11 @@ public class LinkedTree<E> extends AbstractTree<E> {
      */
     public Position<E> addChild(E e, Position<E> p) throws IllegalArgumentException {
         Node<E> parent = validate(p);
-        Position<E> node = new Node<>(e, parent, new ArrayList<>());
+        Node<E> node = new Node<>(e, parent, new ArrayList<>());
         parent.addChild(node);
         return root;
     }
+
 
     /**
      * Makes the given tree position current tree root
@@ -132,7 +137,25 @@ public class LinkedTree<E> extends AbstractTree<E> {
      * @throws IllegalArgumentException If the given position is not a tree node
      */
     public void makePositionRoot(Position<E> p) throws IllegalArgumentException {
+        Node<E> node = validate(p);
+        size = positionSize(node);
+        root = node;
+        node.setParent(null);
+    }
 
+    /**
+     * Calculates the tree size from the given position
+     *
+     * @param p Tree position that you want to calculate the size
+     * @return Total size of the tree from the given position
+     * @throws IllegalArgumentException If the given position is not a tree node
+     */
+    private int positionSize(Position<E> p) throws IllegalArgumentException {
+        Node<E> walk = validate(p);
+        if (numChildren(p) == 0) return 1;
+        Iterator<? extends Position<E>> iterator = walk.getChildren().iterator();
+        while (iterator.hasNext()) size += positionSize(iterator.next());
+        return size;
     }
 
     @Override
