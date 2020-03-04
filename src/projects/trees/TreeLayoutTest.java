@@ -14,7 +14,7 @@ class TreeLayoutTest {
 
     private String oneNodeTreeRepresentation = "0";
     private String simpleTreeRepresentation = "0\n|--1\n|--2";
-    private String complexTreeRepresentation = "0\n|--1\n|  |--3\n|--2\n|  |--4\n|  |--5\n|  |  |--6\n";
+    private String complexTreeRepresentation = "0\n|--1\n|  |--3\n|--2\n|  |--4\n|  |--5\n|  |  |--6";
 
     @BeforeEach
     void init() {
