@@ -1,7 +1,7 @@
 package projects.trees;
 
-import base.trees.LinkedBinaryTree;
 import base.trees.Position;
+import base.trees.Tree;
 
 import java.util.Iterator;
 
@@ -17,11 +17,11 @@ public class TreeLayout {
      * @param <E>
      * @return Schematic tree representation in String format
      */
-    public static <E> String drawBinaryTree(LinkedBinaryTree<E> T) {
-        return drawBinaryNode(T, T.root(), new StringBuilder(), 0);
+    public static <E> String drawTree(Tree<E> T) {
+        return drawNode(T, T.root(), new StringBuilder(), 0);
     }
 
-    private static <E> String drawBinaryNode(LinkedBinaryTree<E> t, Position<E> position, StringBuilder sb, int depth) {
+    private static <E> String drawNode(Tree<E> t, Position<E> position, StringBuilder sb, int depth) {
         for (int i = 1; i < depth; i++) {
             sb.append("|  ");
         }
@@ -31,7 +31,7 @@ public class TreeLayout {
         Iterator<Position<E>> iterator = t.children(position).iterator();
         while (iterator.hasNext()) {
             sb.append("\n");
-            drawBinaryNode(t, iterator.next(), sb, depth + 1);
+            drawNode(t, iterator.next(), sb, depth + 1);
         }
         return sb.toString();
     }
