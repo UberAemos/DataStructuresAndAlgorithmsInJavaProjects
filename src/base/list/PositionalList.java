@@ -2,6 +2,8 @@ package base.list;
 
 import base.trees.Position;
 
+import java.util.List;
+
 /**
  * An interface for positional lists.
  */
@@ -67,4 +69,6 @@ public interface PositionalList<E> {
      * Removes the element stored at Position p and returns it (invalidating p).
      */
     E remove(Position<E> p) throws IllegalArgumentException;
+
+    List<Position<E>> positions();
 }

@@ -2,6 +2,9 @@ package base.list;
 
 import base.trees.Position;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Implementation of a positional list stored as a doubly linked list.
  */
@@ -82,7 +85,6 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
     }
 
     // public accessor methods
-
     /**
      * Returns the number of elements in the linked list.
      */
@@ -125,6 +127,16 @@ public class LinkedPositionalList<E> implements PositionalList<E> {
     public Position<E> after(Position<E> p) throws IllegalArgumentException {
         Node<E> node = validate(p);
         return position(node.getNext());
+    }
+
+    /**
+     * Returns current positions in the list from head to tail
+     */
+    public List<Position<E>> positions() {
+        List<Position<E>> list = new ArrayList<>();
+        Node<E> walk = validate(header.next);
+        while (walk.getNext() != null) list.add(walk);
+        return list;
     }
 
     // private utilities
